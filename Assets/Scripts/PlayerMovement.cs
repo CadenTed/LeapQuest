@@ -10,6 +10,10 @@ namespace DefaultNamespace
     {
         public Rigidbody2D playerRb;
 
+        public Animator animator;
+
+        public SpriteRenderer spriteRenderer;
+
         public Vector2 checkPos;
 
         public int speed = 2;
@@ -41,6 +45,15 @@ namespace DefaultNamespace
                 playerRb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
             }
 
+
+            if (Input.GetAxis("Horizontal") < 0)
+            {
+                spriteRenderer.flipX = true;
+            }
+            else if (Input.GetAxis("Horizontal") > 0)
+            {
+                spriteRenderer.flipX = false;
+            }
             
             if (pos.y < -10)
             {
@@ -60,6 +73,11 @@ namespace DefaultNamespace
             {
                 _isGrounded = true;
             }
+
+            Debug.Log(Mathf.Abs(Input.GetAxis("Horizontal")));
+
+            animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
+
         }
 
         private void OnTriggerEnter2D(Collider2D other)
