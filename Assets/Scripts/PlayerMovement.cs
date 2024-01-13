@@ -42,8 +42,11 @@ namespace DefaultNamespace
             
             if (Input.GetKeyDown(KeyCode.Space) && _isGrounded)
             {
+                animator.SetBool("IsJump", true);
                 playerRb.AddForce(Vector2.up * force, ForceMode2D.Impulse);
             }
+
+            
 
 
             if (Input.GetAxis("Horizontal") < 0)
@@ -63,7 +66,6 @@ namespace DefaultNamespace
 
             _hit = Physics2D.Raycast(checkPos, -Vector2.up, 0.1f);
 
-            
 
             if (_hit.collider == null)
             {
@@ -73,9 +75,7 @@ namespace DefaultNamespace
             {
                 _isGrounded = true;
             }
-
-            Debug.Log(Mathf.Abs(Input.GetAxis("Horizontal")));
-
+            
             animator.SetFloat("Speed", Mathf.Abs(Input.GetAxis("Horizontal")));
 
         }
@@ -120,6 +120,11 @@ namespace DefaultNamespace
                     SceneManager.LoadScene("EndlessMode");
 
                 }
+            }
+
+            if (other.gameObject.CompareTag("Ground"))
+            {
+                animator.SetBool("IsJump", false);
             }
         }
         
